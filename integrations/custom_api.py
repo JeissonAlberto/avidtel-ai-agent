@@ -1,3 +1,7 @@
+"""
+Desarrollado por: Jeisson Alberto
+Proyecto: Asistente IA Avidtel - Soporte Técnico & Ventas
+"""
 import requests
 from typing import Dict, Any
 
