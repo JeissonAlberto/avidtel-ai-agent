@@ -1,3 +1,7 @@
+"""
+Desarrollado por: Jeisson Alberto
+Proyecto: Asistente IA Avidtel - Soporte Técnico & Ventas
+"""
 import os
 import json
 from integrations.smartolt import SmartOLTIntegration
