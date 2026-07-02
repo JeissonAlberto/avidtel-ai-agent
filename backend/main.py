@@ -1,6 +1,6 @@
 """
 Desarrollado por: Jeisson Alberto
-Proyecto: Asistente IA Avidtel - Soporte Técnico & Ventas
+Proyecto: AI Agent
 """
 import os
 import json
