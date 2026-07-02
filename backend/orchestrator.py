@@ -1,3 +1,7 @@
+"""
+Desarrollado por: Jeisson Alberto
+Proyecto: Asistente IA Avidtel - Soporte Técnico & Ventas
+"""
 import logging
 from datetime import datetime
 from typing import Dict, Any, Optional
