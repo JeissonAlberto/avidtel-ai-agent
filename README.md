@@ -73,4 +73,4 @@ Apunta el Webhook de tu proveedor de WhatsApp a la dirección IP donde corras es
 - `/docs`: Guías detalladas de flujo de trabajo.
 
 ---
-**Desarrollado para Avidtel por Zapia AI.**
+**Desarrollado por Jeisson Alberto para Avidtel.**
