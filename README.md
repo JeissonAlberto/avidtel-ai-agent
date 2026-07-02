@@ -1,7 +1,7 @@
-# 🚀 Avidtel AI Agent: Sistema de Soporte Técnico & Ventas Proactivas
+# 🚀 AI Agent: Sistema de Soporte Técnico & Ventas Proactivas
 
 ## 📖 ¿Para qué sirve?
-Este software es un **Digital Worker** (Trabajador Digital) diseñado específicamente para ISPs. Su función principal es automatizar el ciclo de vida del cliente: desde la resolución de fallas técnicas y cambios de configuración de red, hasta la detección de oportunidades de venta (upselling) basadas en el uso del servicio.
+Este software es un **Digital Worker** (Trabajador Digital) diseñado para cualquier tipo de empresa. Su función principal es automatizar el ciclo de vida del cliente: desde la resolución de fallas técnicas y cambios de configuración de red, hasta la detección de oportunidades de venta (upselling) basadas en el uso del servicio.
 
 **El objetivo:** Reducir la carga operativa del equipo de soporte en un 80% y aumentar los ingresos por cliente de forma automática.
 
@@ -73,4 +73,4 @@ Apunta el Webhook de tu proveedor de WhatsApp a la dirección IP donde corras es
 - `/docs`: Guías detalladas de flujo de trabajo.
 
 ---
-**Desarrollado por Jeisson Alberto para Avidtel.**
+**Desarrollado por Jeisson Alberto.**
