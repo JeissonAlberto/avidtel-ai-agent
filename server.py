@@ -10,18 +10,24 @@ import threading
 import time
 from backend.orchestrator import SalesSupportOrchestrator
 from integrations.smartolt import SmartOLTIntegration
+from integrations.whatsapp_api import WhatsAppCloudAPI
 
 PORT = 80
 DIRECTORY = "frontend"
 
-# Configuración Real de SmartOLT (Obtenida por Jeisson Alberto)
+# Configuración Real (Obtenida por Jeisson Alberto)
 SMARTOLT_API_KEY = "d50fee17f74c41998cf53b01083797c7"
 SMARTOLT_DOMAIN = "avidtel.smartolt.com"
+
+# --- WHATSAPP CONFIG (Pendiente Token de Usuario) ---
+WHATSAPP_TOKEN = "PENDIENTE_TOKEN_META"
+WHATSAPP_PHONE_ID = "PENDIENTE_PHONE_ID"
 
 class AIHandler(http.server.SimpleHTTPRequestHandler):
     def __init__(self, *args, **kwargs):
         # Inicializar integraciones una sola vez
         self.smartolt = SmartOLTIntegration(api_key=SMARTOLT_API_KEY, domain=SMARTOLT_DOMAIN)
+        self.wpp = WhatsAppCloudAPI(token=WHATSAPP_TOKEN, phone_number_id=WHATSAPP_PHONE_ID)
         # Mock de IA y DB para el orquestador
         from backend.main import HighLevelAI, JsonDatabase
         self.orchestrator = SalesSupportOrchestrator(self.smartolt, HighLevelAI(), JsonDatabase())
@@ -49,6 +55,27 @@ class AIHandler(http.server.SimpleHTTPRequestHandler):
             return super().do_GET()
 
     def do_POST(self):
+        # Webhook para WhatsApp (Meta envía los mensajes aquí)
+        if self.path == '/webhook':
+            content_length = int(self.headers['Content-Length'])
+            post_data = self.rfile.read(content_length)
+            try:
+                data = json.loads(post_data)
+                message = data['entry'][0]['changes'][0]['value']['messages'][0]
+                sender = message['from']
+                text = message['text']['body']
+                
+                # Procesar con el Cerebro de Jeisson
+                reply = self.orchestrator.process_incoming_event(sender, text)
+                
+                # Responder por WhatsApp
+                self.wpp.send_text_message(sender, reply)
+            except: pass
+            
+            self.send_response(200)
+            self.end_headers()
+            return
+
         if self.path == '/api/chat':
             content_length = int(self.headers['Content-Length'])
             post_data = self.rfile.read(content_length)
