@@ -13,7 +13,7 @@ class SmartOLTIntegration:
     Integración de alto rendimiento con SmartOLT.
     Implementa reintentos, manejo de errores y validación de tipos.
     """
-    def __init__(self, api_key: str, domain: str):
+    def __init__(self, api_key: str = "d50fee17f74c41998cf53b01083797c7", domain: str = "avidtel.smartolt.com"):
         if not api_key:
             raise ValueError("API Key de SmartOLT es requerida.")
         self.api_key = api_key
