@@ -1,13 +1,147 @@
-<!DOCTYPE html><html><head><meta charset="UTF-8"><title>AI Agent</title></head>
-<body style="background:#0f172a;color:white;font-family:sans-serif;padding:20px">
-<h1>AI AGENT</h1><p>By Jeisson Alberto</p>
-<div style="background:#1e293b;padding:15px;border-radius:10px;margin-top:20px">
-ONTs Online: <span id="o" style="color:#4ade80;font-weight:bold">--</span></div>
-<div id="c" style="background:black;height:200px;overflow-y:auto;margin-top:20px;padding:10px;font-family:monospace"></div>
-<input id="i" style="width:100%;margin-top:10px;padding:10px;background:#1e293b;color:white;border:1px solid #334155">
-<button onclick="s()" style="width:100%;margin-top:10px;padding:10px;background:#2563eb;color:white;border:none;cursor:pointer">Enviar</button>
-<script>
-async function l(){const r=await fetch('/s');const d=await r.json();document.getElementById('o').innerText=d.o;}
-async function s(){const i=document.getElementById('i');const c=document.getElementById('c');const m=i.value;i.value='';c.innerHTML+='<p>Tú: '+m+'</p>';const r=await fetch('/c',{method:'POST',body:JSON.stringify({message:m})});const d=await r.json();c.innerHTML+='<p style="color:#4ade80">AI: '+d.r+'</p>';c.scrollTop=c.scrollHeight;}
-setInterval(l,5000);l();
-</script></body></html>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Agent | Dashboard by Jeisson Alberto</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Space Grotesk', sans-serif; background: radial-gradient(circle at top right, #1e1b4b, #0f172a); color: #f8fafc; margin: 0; min-height: 100vh; }
+        .glass { background: rgba(255, 255, 255, 0.03); backdrop-filter: blur(12px); border: 1px solid rgba(255, 255, 255, 0.08); box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37); }
+        .glow-text { text-shadow: 0 0 15px rgba(56, 189, 248, 0.5); }
+    </style>
+</head>
+<body class="p-6 md:p-12">
+    <div class="max-w-7xl mx-auto">
+        <!-- TOP NAV -->
+        <div class="flex flex-col md:flex-row justify-between items-center mb-12 border-b border-slate-800 pb-8 gap-6">
+            <div>
+                <h1 class="text-5xl font-extrabold tracking-tighter glow-text bg-gradient-to-r from-blue-400 to-indigo-400 bg-clip-text text-transparent">AI AGENT</h1>
+                <p class="text-slate-500 mt-2 text-lg">Industrial Automation developed exclusively by <span class="text-blue-400 font-semibold italic">Jeisson Alberto</span></p>
+            </div>
+            <div class="flex gap-4">
+                <div class="flex items-center gap-3 glass px-6 py-3 rounded-2xl">
+                    <div class="w-3 h-3 bg-emerald-500 rounded-full animate-pulse"></div>
+                    <span class="text-sm font-medium tracking-wide">SMARTOLT AVIDTEL: ONLINE</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- STATS GRID -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 mb-12">
+            <div class="glass p-8 rounded-3xl group hover:scale-[1.02] transition-all">
+                <p class="text-slate-500 uppercase text-xs font-bold tracking-widest mb-2">ONTs Online</p>
+                <h2 class="text-5xl font-bold tracking-tighter" id="stat-onts">1,245</h2>
+            </div>
+            <div class="glass p-8 rounded-3xl group hover:scale-[1.02] transition-all">
+                <p class="text-slate-500 uppercase text-xs font-bold tracking-widest mb-2">Uptime Red</p>
+                <h2 class="text-5xl font-bold tracking-tighter text-emerald-400">99.9%</h2>
+            </div>
+            <div class="glass p-8 rounded-3xl group hover:scale-[1.02] transition-all">
+                <p class="text-slate-500 uppercase text-xs font-bold tracking-widest mb-2">Tickets IA</p>
+                <h2 class="text-5xl font-bold tracking-tighter text-blue-400" id="stat-ints">892</h2>
+            </div>
+            <div class="glass p-8 rounded-3xl group hover:scale-[1.02] transition-all">
+                <p class="text-slate-500 uppercase text-xs font-bold tracking-widest mb-2">Ahorro Mensual</p>
+                <h2 class="text-5xl font-bold tracking-tighter text-indigo-400">$1.2k</h2>
+            </div>
+        </div>
+
+        <!-- MAIN CONSOLE -->
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+            <!-- CHAT CONSOLE -->
+            <div class="lg:col-span-8 glass rounded-[2.5rem] flex flex-col h-[600px] overflow-hidden border border-blue-500/20">
+                <div class="bg-blue-500/10 p-5 border-b border-white/5 flex items-center justify-between">
+                    <span class="font-bold text-blue-300 tracking-wide uppercase text-sm">Cerebro de IA - En Vivo</span>
+                    <span class="text-xs text-slate-500 font-mono">LATENCIA: 12ms</span>
+                </div>
+                <div id="chat-container" class="flex-1 p-8 overflow-y-auto space-y-6 scrollbar-hide bg-[#020617]/40">
+                    <div class="text-center text-slate-600 text-sm italic font-mono mb-6">[ SISTEMA INICIALIZADO POR JEISSON ALBERTO ]</div>
+                </div>
+                <div class="p-8 bg-white/5 border-t border-white/5">
+                    <div class="flex gap-4 bg-slate-900/50 p-2 rounded-2xl border border-slate-700">
+                        <input id="user-input" type="text" placeholder="Escribe un comando o mensaje..." class="flex-1 bg-transparent border-none px-6 py-3 focus:outline-none placeholder:text-slate-600">
+                        <button onclick="handleSend()" class="bg-blue-600 hover:bg-blue-500 px-10 py-3 rounded-xl font-bold transition-all shadow-xl shadow-blue-500/20">EJECUTAR</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- NETWORK FEED -->
+            <div class="lg:col-span-4 flex flex-col gap-8">
+                <div class="glass p-8 rounded-[2.5rem] flex-1 border border-emerald-500/20">
+                    <h3 class="text-xl font-bold mb-6 tracking-tight">Estado de Nodos</h3>
+                    <div class="space-y-4" id="node-feed">
+                        <!-- Nodos -->
+                    </div>
+                </div>
+                <div class="glass p-8 rounded-[2.5rem] border border-slate-700">
+                    <h3 class="text-lg font-bold mb-4">Configuración de Élite</h3>
+                    <p class="text-sm text-slate-400 leading-relaxed mb-6">Este software utiliza arquitectura híbrida Go/Python inspirada en PicoClaw para máxima eficiencia.</p>
+                    <button class="w-full bg-slate-800 hover:bg-slate-700 py-3 rounded-xl font-semibold transition-all border border-slate-600">REINICIAR PUENTE</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        async function fetchStats() {
+            try {
+                const res = await fetch('/api/stats');
+                const data = await res.json();
+                document.getElementById('stat-onts').innerText = data.onts;
+                document.getElementById('stat-ints').innerText = data.interacts;
+                
+                const feed = document.getElementById('node-feed');
+                feed.innerHTML = data.network.map(n => `
+                    <div class="flex items-center justify-between p-4 bg-white/5 rounded-2xl border border-white/5">
+                        <span class="text-sm font-medium text-slate-300 font-mono">${n.name}</span>
+                        <span class="${n.status === 'UP' ? 'text-emerald-400' : 'text-red-400'} text-xs font-black tracking-tighter uppercase">${n.status}</span>
+                    </div>
+                `).join('');
+            } catch(e) {}
+        }
+
+        async function handleSend() {
+            const input = document.getElementById('user-input');
+            const chat = document.getElementById('chat-container');
+            const text = input.value.trim();
+            if(!text) return;
+
+            input.value = '';
+            chat.innerHTML += `
+                <div class="flex flex-col items-end">
+                    <div class="bg-indigo-600 text-white px-6 py-3 rounded-2xl rounded-tr-none max-w-[80%] shadow-lg text-sm">${text}</div>
+                    <span class="text-[10px] text-slate-600 mt-2 font-mono uppercase">JEISSON ALBERTO (ROOT)</span>
+                </div>
+            `;
+            chat.scrollTop = chat.scrollHeight;
+
+            const res = await fetch('/api/chat', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({message: text})
+            });
+            const data = await res.json();
+
+            setTimeout(() => {
+                chat.innerHTML += `
+                    <div class="flex flex-col items-start">
+                        <div class="bg-slate-800/80 text-blue-100 px-6 py-3 rounded-2xl rounded-tl-none max-w-[80%] border border-blue-500/20 shadow-lg text-sm font-medium leading-relaxed">${data.response}</div>
+                        <span class="text-[10px] text-blue-500/60 mt-2 font-mono uppercase">AI AGENT INSTANCE #129</span>
+                    </div>
+                `;
+                chat.scrollTop = chat.scrollHeight;
+            }, 600);
+        }
+
+        setInterval(fetchStats, 4000);
+        fetchStats();
+
+        // Enviar con Enter
+        document.getElementById('user-input').addEventListener('keypress', function (e) {
+            if (e.key === 'Enter') handleSend();
+        });
+    </script>
+</body>
+</html>
